@@ -1,3 +1,9 @@
+// ─── 카카오 SDK 초기화 및 검증 ───
+if (typeof Kakao !== 'undefined' && !Kakao.isInitialized()) {
+  Kakao.init('bffa316765b8ffe8dc8d2feca3cfe6ac');
+  console.log('Kakao.isInitialized() :', Kakao.isInitialized());
+}
+
 /**
  * 사주 행운 리포트 v2 — 프론트엔드
  */
@@ -47,7 +53,7 @@ document.getElementById('sajuForm').addEventListener('submit', async e => {
 
   btn.disabled = true; btn.querySelector('.btn-text').textContent = '분석 중...'; ind.style.display = 'flex';
   try {
-    const res = await fetch('/api/saju', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(p) });
+    const res = await fetch('/analyze', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(p) });
     const data = await res.json();
     if (data.error) { alert(data.error); return; }
     render(data);

@@ -46,7 +46,7 @@ function serveStatic(req, res) {
 }
 
 function handleApi(req, res) {
-  if (req.method === 'POST' && req.url === '/api/saju') {
+  if (req.method === 'POST' && req.url === '/analyze') {
     let body = '';
     req.on('data', chunk => { body += chunk; });
     req.on('end', () => {

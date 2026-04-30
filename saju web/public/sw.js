@@ -3,7 +3,7 @@
  * Network-first → 오프라인 시 캐시 폴백
  */
 
-const CACHE_NAME = 'vibe-saju-v2';
+const CACHE_NAME = 'vibe-saju-v3';
 const STATIC_ASSETS = [
   '/',
   '/index.html',
@@ -42,7 +42,7 @@ self.addEventListener('fetch', event => {
   const url = new URL(request.url);
 
   // API 요청 — 네트워크 전용
-  if (url.pathname.startsWith('/api/')) {
+  if (url.pathname === '/analyze') {
     event.respondWith(
       fetch(request).catch(() => {
         return new Response(
