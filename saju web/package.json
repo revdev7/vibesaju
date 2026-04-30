@@ -1,0 +1,16 @@
+{
+  "name": "vibe-saju",
+  "version": "1.0.0",
+  "description": "바이브 사주 — AI 사주 분석 · 진태양시 보정 v6.0",
+  "type": "module",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test/boundary_test.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}
