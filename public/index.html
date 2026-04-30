@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="description" content="AI 사주팔자 만세력 분석 — 오늘의 행운 리포트와 정밀 사주 분석을 제공합니다.">
+  <meta name="theme-color" content="#8b5cf6">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="바이브사주">
+  <meta name="mobile-web-app-capable" content="yes">
+  <title>🔮 바이브 사주 — AI 행운 리포트</title>
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="/icons/icon-512.png">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Analytics / Google Tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-WQN22DJ4"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'GTM-WQN22DJ4', { send_page_view: true });
+  </script>
+</head>
+
+<body>
+  <div class="bg-particles"></div>
+
+  <div class="app-container">
+    <!-- 헤더 -->
+    <header class="app-header">
+      <div class="header-glow"></div>
+      <h1 id="main-heading">
+        <span class="emoji-float">🔮</span>
+        오늘의 행운 리포트
+      </h1>
+      <p class="subtitle">AI 사주 분석 · 진태양시 보정 v6.0</p>
+    </header>
+
+    <!-- ═══ 입력 폼 ═══ -->
+    <section class="input-section" id="inputSection">
+      <div class="section-title">
+        <span class="icon">📝</span>
+        <h2>생년월일시 입력</h2>
+      </div>
+      <form id="sajuForm" class="saju-form">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="birthYear">출생 연도</label>
+            <input type="number" id="birthYear" min="1937" max="2026" placeholder="1990" required>
+          </div>
+          <div class="form-group">
+            <label for="birthMonth">월</label>
+            <select id="birthMonth" required>
+              <option value="">선택</option>
+              <option value="1">1월</option>
+              <option value="2">2월</option>
+              <option value="3">3월</option>
+              <option value="4">4월</option>
+              <option value="5">5월</option>
+              <option value="6">6월</option>
+              <option value="7">7월</option>
+              <option value="8">8월</option>
+              <option value="9">9월</option>
+              <option value="10">10월</option>
+              <option value="11">11월</option>
+              <option value="12">12월</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="birthDay">일</label>
+            <input type="number" id="birthDay" min="1" max="31" placeholder="15" required>
+          </div>
+        </div>
+
+        <div class="time-unknown-row">
+          <label class="checkbox-label" for="timeUnknown">
+            <input type="checkbox" id="timeUnknown">
+            <span class="checkbox-custom"></span>
+            <span class="checkbox-text">🕐 태어난 시간을 모릅니다</span>
+          </label>
+          <span class="time-unknown-hint">3주(三柱) 분석 진행</span>
+        </div>
+
+        <div class="form-row" id="timeRow">
+          <div class="form-group">
+            <label for="birthHour">시</label>
+            <select id="birthHour">
+              <option value="">선택</option>
+              <option value="0">00시</option>
+              <option value="1">01시</option>
+              <option value="2">02시</option>
+              <option value="3">03시</option>
+              <option value="4">04시</option>
+              <option value="5">05시</option>
+              <option value="6">06시</option>
+              <option value="7">07시</option>
+              <option value="8">08시</option>
+              <option value="9">09시</option>
+              <option value="10">10시</option>
+              <option value="11">11시</option>
+              <option value="12">12시</option>
+              <option value="13">13시</option>
+              <option value="14">14시</option>
+              <option value="15">15시</option>
+              <option value="16">16시</option>
+              <option value="17">17시</option>
+              <option value="18">18시</option>
+              <option value="19">19시</option>
+              <option value="20">20시</option>
+              <option value="21">21시</option>
+              <option value="22">22시</option>
+              <option value="23">23시</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="birthMinute">분</label>
+            <input type="number" id="birthMinute" min="0" max="59" placeholder="30">
+          </div>
+          <div class="form-group">
+            <label for="gender">성별</label>
+            <select id="gender" required>
+              <option value="남">남</option>
+              <option value="여">여</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="analysis-indicator" id="analysisIndicator" style="display:none;">
+          <div class="spinner"></div>
+          <span>🌏 정밀 분석 중...</span>
+        </div>
+
+        <button type="submit" id="submitBtn" class="submit-btn">
+          <span class="btn-text">✨ 나의 행운 리포트 보기</span>
+          <span class="btn-shine"></span>
+        </button>
+      </form>
+    </section>
+
+    <!-- ═══ 결과 영역 ═══ -->
+    <section class="result-section" id="resultSection" style="display:none;">
+
+      <!-- 탭 네비게이션 -->
+      <div class="tab-nav">
+        <button class="tab-btn active" data-tab="daily" id="tabDaily">
+          <span>✨</span> 오늘의 리포트
+        </button>
+        <button class="tab-btn" data-tab="pro" id="tabPro">
+          <span>📖</span> 상세 운세
+          <span class="pro-badge">Pro</span>
+        </button>
+      </div>
+
+      <!-- ─── Daily Report (오늘의 리포트) ─── -->
+      <div class="tab-content active" id="dailyTab">
+        <!-- 감성 요약 카드 -->
+        <div class="card mood-card" id="moodCard"></div>
+
+        <!-- 재물운 / 사회운 (간략) -->
+        <div class="fortune-grid">
+          <div class="card mini-card" id="wealthCard"></div>
+          <div class="card mini-card" id="socialCard"></div>
+        </div>
+
+        <!-- 오행 밸런스 -->
+        <div class="card" id="ohaengCard">
+          <h3>🌿 나의 오행 밸런스</h3>
+          <div class="ohaeng-bars" id="ohaengBars"></div>
+        </div>
+
+        <!-- 골든타임 -->
+        <div class="card golden-card" id="goldenCard"></div>
+
+        <!-- 보정 안내 -->
+        <div class="solar-badge" id="solarBadge"></div>
+
+        <!-- 공유 버튼 -->
+        <div class="share-bar" id="shareBar">
+          <button class="share-btn kakao-btn" id="shareKakaoBtn">
+            <span>💬</span> 카카오톡 공유
+          </button>
+          <button class="share-btn link-btn" id="shareLinkBtn">
+            <span>🔗</span> 링크 복사
+          </button>
+        </div>
+
+        <!-- 사주 원국 상세보기 토글 -->
+        <button class="narrative-toggle chart-toggle" id="chartToggle">
+          <span>🔮</span> 사주 원국 상세보기
+          <span class="toggle-arrow" id="chartToggleArrow">▼</span>
+        </button>
+
+        <!-- 사주 원국 상세 (접힘) -->
+        <div class="narrative-section" id="chartSection" style="display:none;">
+          <div class="card">
+            <h3>🔮 사주 원국 (四柱原局)</h3>
+            <p class="card-hint">오른쪽(년주) → 왼쪽(시주) 순서로 읽습니다</p>
+            <div class="pillar-cards" id="pillarCards"></div>
+          </div>
+          <div class="card daygan-hero" id="dayganHero"></div>
+          <div class="card">
+            <h3>📊 십성 분포</h3>
+            <div class="detail-grid" id="sipsungGrid"></div>
+          </div>
+          <div class="card">
+            <h3>🌱 지장간 (숨은 천간)</h3>
+            <div class="detail-grid" id="jijangganGrid"></div>
+          </div>
+          <div class="card">
+            <h3>🔄 12운성</h3>
+            <div class="detail-grid" id="stagesGrid"></div>
+          </div>
+          <div class="card">
+            <h3>⚡ 신살 분석</h3>
+            <div class="shinsal-grid" id="shinsalGrid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── Pro (서술형 상세 운세) ─── -->
+      <div class="tab-content" id="proTab">
+        <!-- Pro 무료 안내 배너 -->
+        <div class="pro-free-banner" id="proFreeBanner">
+          <span class="pro-free-icon">🎁</span>
+          <div class="pro-free-text">
+            <strong>현재 무료 체험 중!</strong>
+            <p>상세 운세 분석을 무료로 이용하고 계십니다.</p>
+          </div>
+        </div>
+
+        <!-- 서술형 운세 -->
+        <div class="card narrative-card">
+          <div class="nar-header" id="narHeader"></div>
+          <div class="nar-opening" id="narOpening"></div>
+        </div>
+        <div class="card narrative-card">
+          <div class="nar-block" id="narWealth"></div>
+        </div>
+        <div class="card narrative-card">
+          <div class="nar-block" id="narSocial"></div>
+        </div>
+        <div class="card narrative-card golden-guide-card">
+          <h3>💰 행운 가이드</h3>
+          <div class="guide-grid" id="guideGrid"></div>
+        </div>
+      </div>
+
+      <!-- ─── 광고 슬롯 (Google AdSense 예정) ─── -->
+      <!-- TODO: 추후 AdSense 승인 후 data-ad-client, data-ad-slot 속성 추가 -->
+      <div class="ad-slot" id="adSlot">
+        <div class="ad-placeholder">
+          <span>📢</span> 광고 영역
+        </div>
+      </div>
+
+      <button class="reset-btn" id="resetBtn">
+        <span>🔄</span> 다시 분석하기
+      </button>
+    </section>
+  </div>
+
+  <!-- 공유 토스트 알림 -->
+  <div class="share-toast" id="shareToast"></div>
+
+  <!-- 카카오 SDK (동기 로드 - 실행 순서 보장) -->
+  <!-- TODO: 카카오 디벨로퍼스에서 JavaScript 키 발급 후 교체 -->
+  <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.4/kakao.min.js"></script>
+
+  <script src="analytics.js"></script>
+  <script src="app.js"></script>
+
+
+
+  <!-- Service Worker 등록 -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(reg => console.log('✅ SW 등록 완료:', reg.scope))
+          .catch(err => console.warn('⚠️ SW 등록 실패:', err));
+      });
+    }
+  </script>
+</body>
+
+</html>
